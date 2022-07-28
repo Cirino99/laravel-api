@@ -5107,18 +5107,20 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       baseUrl: window.location.origin,
-      posts: []
+      posts: [],
+      currentPage: 1
     };
   },
   created: function created() {
-    this.getPostsData();
+    this.getPostsData(1);
   },
   methods: {
-    getPostsData: function getPostsData() {
+    getPostsData: function getPostsData(page) {
       var _this = this;
 
-      axios.get('http://localhost:8000/api/posts').then(function (res) {
+      axios.get('http://localhost:8000/api/posts?page=' + page).then(function (res) {
         _this.posts = res.data.response.data;
+        _this.currentPage = res.data.response.current_page;
         console.log(res);
       })["catch"](function (error) {
         return console.log('errore!!!!!');
@@ -5147,7 +5149,7 @@ var render = function render() {
   return _c("section", [_c("div", {
     staticClass: "container"
   }, [_c("h1", {
-    staticClass: "text-center"
+    staticClass: "text-center mb-4"
   }, [_vm._v("Boolpress")]), _vm._v(" "), _c("div", {
     staticClass: "row g-2"
   }, _vm._l(_vm.posts, function (post) {
@@ -5169,19 +5171,12 @@ var render = function render() {
     }, [_vm._v(_vm._s(post.title))]), _vm._v(" "), _c("p", {
       staticClass: "card-text mb-auto"
     }, [_vm._v(_vm._s(post.excerpt))]), _vm._v(" "), _c("a", {
-      staticClass: "btn btn-primary",
+      staticClass: "btn btn-primary mt-4 align-self-end",
       attrs: {
         href: _vm.baseUrl + "/posts/" + post.slug
       }
-    }, [_vm._v("Go somewhere")])])])]);
-  }), 0), _vm._v(" "), _vm._m(0)])]);
-};
-
-var staticRenderFns = [function () {
-  var _vm = this,
-      _c = _vm._self._c;
-
-  return _c("nav", {
+    }, [_vm._v("Go\n                            somewhere")])])])]);
+  }), 0), _vm._v(" "), _c("nav", {
     staticClass: "mt-3",
     attrs: {
       "aria-label": "Page navigation"
@@ -5195,10 +5190,15 @@ var staticRenderFns = [function () {
     attrs: {
       href: "#",
       "aria-label": "Previous"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.getPostsData(--_vm.currentPage);
+      }
     }
   }, [_c("span", {
     attrs: {
-      "aria-hidden": "true"
+      "aria-hidden": " true"
     }
   }, [_vm._v("«")])])]), _vm._v(" "), _c("li", {
     staticClass: "page-item"
@@ -5206,35 +5206,57 @@ var staticRenderFns = [function () {
     staticClass: "page-link",
     attrs: {
       href: "#"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.getPostsData(_vm.currentPage);
+      }
     }
-  }, [_vm._v("1")])]), _vm._v(" "), _c("li", {
+  }, [_vm._v(_vm._s(_vm.currentPage))])]), _vm._v(" "), _c("li", {
     staticClass: "page-item"
   }, [_c("a", {
     staticClass: "page-link",
     attrs: {
       href: "#"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.getPostsData(++_vm.currentPage);
+      }
     }
-  }, [_vm._v("2")])]), _vm._v(" "), _c("li", {
+  }, [_vm._v(_vm._s(1 + _vm.currentPage))])]), _vm._v(" "), _c("li", {
     staticClass: "page-item"
   }, [_c("a", {
     staticClass: "page-link",
     attrs: {
       href: "#"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.getPostsData(2 + _vm.currentPage);
+      }
     }
-  }, [_vm._v("3")])]), _vm._v(" "), _c("li", {
+  }, [_vm._v(_vm._s(2 + _vm.currentPage))])]), _vm._v(" "), _c("li", {
     staticClass: "page-item"
   }, [_c("a", {
     staticClass: "page-link",
     attrs: {
       href: "#",
       "aria-label": "Next"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.getPostsData(++_vm.currentPage);
+      }
     }
   }, [_c("span", {
     attrs: {
       "aria-hidden": "true"
     }
-  }, [_vm._v("»")])])])])]);
-}];
+  }, [_vm._v("»")])])])])])])]);
+};
+
+var staticRenderFns = [];
 render._withStripped = true;
 
 
