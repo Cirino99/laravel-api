@@ -60,10 +60,10 @@ export default {
     methods: {
         getPostsData(page) {
             axios.get('/api/posts?page=' + page)
-                .then(res => {
-                    this.posts = res.data.response.data;
-                    this.currentPage = res.data.response.current_page;
-                    console.log(res);
+                .then(response => {
+                    this.posts = response.data.result.data;
+                    this.currentPage = response.data.result.current_page;
+                    console.log(response);
                 })
                 .catch(error => console.log('errore!!!!!'));
         }
