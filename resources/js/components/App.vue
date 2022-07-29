@@ -59,7 +59,7 @@ export default {
     },
     methods: {
         getPostsData(page) {
-            axios.get('http://localhost:8000/api/posts?page=' + page)
+            axios.get('/api/posts?page=' + page)
                 .then(res => {
                     this.posts = res.data.response.data;
                     this.currentPage = res.data.response.current_page;

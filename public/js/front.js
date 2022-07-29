@@ -5118,7 +5118,7 @@ __webpack_require__.r(__webpack_exports__);
     getPostsData: function getPostsData(page) {
       var _this = this;
 
-      axios.get('http://localhost:8000/api/posts?page=' + page).then(function (res) {
+      axios.get('/api/posts?page=' + page).then(function (res) {
         _this.posts = res.data.response.data;
         _this.currentPage = res.data.response.current_page;
         console.log(res);
